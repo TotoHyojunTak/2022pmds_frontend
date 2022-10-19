@@ -88,9 +88,10 @@ jobs:
 #         cache-to: type=local,dest=/tmp/.buildx-cache-new
       run: 
         echo pwd
-        docker build . -t ${{ secrets.DOCKER_FULL_REPO }} 
-        docker push ${{ secrets.DOCKER_FULL_REPO }} 
-        
+        docker build -t thj0309/2022pmds_frontend:1.0 .
+        docker push thj0309/2022pmds_frontend:1.0
+#        docker build . -t ${{ secrets.DOCKER_FULL_REPO }} 
+#        docker push ${{ secrets.DOCKER_FULL_REPO }}         
         
     - name: DOCKER - Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
