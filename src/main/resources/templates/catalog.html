@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>catalog</title>
+</head>
+<body>
+
+catalog 화면
+<button id="btnGet">TEST</button>
+
+<p th:text="test"></p>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#btnGet").click(function() {
+        $.ajax({
+            url: "/catalog/test",
+            type: "get",
+            success: function (data) {
+                alert(data);
+            }
+        });
+    });
+});
+
+</script>
+
+</html>

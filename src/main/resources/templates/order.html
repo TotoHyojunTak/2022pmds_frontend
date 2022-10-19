@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>order</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+</head>
+<body>
+
+<h1>ORDER SERVICE</h1>
+<br />
+<h2>사용자별 주문 리스트</h2>
+사용자ID <input type="text" id="userId"/>
+<button id="btnGet">조회</button>
+
+<div id="panel">
+
+</div>
+
+</body>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#btnGet").click(function() {
+            const userId = document.getElementById("userId").value;
+            $.ajax({
+                url: "/order/list/" + userId
+                , dataType: "json"
+                , error: function (error) {
+                    alert("ERROR!" + error);
+                } // error end
+                , success: function (result) {
+                    console.log(result);
+                    console.log(result.length);
+                    let size = result.length;
+                    let str = "<table border='1'>";
+                    str += "<tr>";
+                    str += "<th>주문번호</th>";
+                    str += "<th>상품번호</th>";
+                    str += "<th>수량</th>";
+                    str += "<th>단가</th>";
+                    str += "<th>전체금액</th>";
+                    str += "</tr>"
+                    $("#panel").append(str);
+
+                    for (i = 0; i < size; i++) {
+                        str = "";
+                        str += "<tr border='1'>";
+                        str += "    <td>" + result[i].orderId + "</td>";
+                        str += "    <td>" + result[i].produceId + "</td>";
+                        str += "    <td>" + result[i].qty + "</td>";
+                        str += "    <td>" + result[i].unitPrice + "</td>";
+                        str += "    <td>" + result[i].totalPrice + "</td>";
+                        str += "</tr>";
+                        //for end
+
+                        //$("#panel").html(str);
+                        // $("#panel").text(str);
+                        $("#panel").append(str);
+                    }
+
+                    str += "</table>";
+                    $("#panel").append(str);
+                    // success end
+                } // ajax() end
+            }); // click end
+        });
+    });
+
+</script>
+</html>

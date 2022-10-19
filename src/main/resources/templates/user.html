@@ -6,25 +6,13 @@
 </head>
 <body>
 
-user 화면
-<button id="btnGet">TEST</button>
-
-<p th:text="test"></p>
+<h1>USER SERVICE</h1>
+<br />
+<a href="/user/users">USER 페이지 호출</a>
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-    $("#btnGet").click(function() {
-        $.ajax({
-            url: "/user/test",
-            type: "get",
-            success: function (data) {
-                alert(data);
-            }
-        });
-    });
-});
 
 </script>
 

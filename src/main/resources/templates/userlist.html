@@ -29,15 +29,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    $("#btnGet").click(function() {
         $.ajax({
-            url: "/user/test",
+            url: "/user/users",
             type: "get",
             success: function (data) {
-                alert(data);
+                //alert(data);
             }
         });
-    });
 });
 
 </script>
