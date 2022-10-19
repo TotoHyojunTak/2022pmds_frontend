@@ -1,12 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"><!--xml스키마선언하면 타임리프 템플릿엔진 사용가능-->
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-front-end 화면
-<a href="http://146.56.114.57:9999/api/v1/hello/helloworld" target="_blank">front-end</a>
-</body>
-</html>
 
+<h1>Spring Feign Client</h1>
+
+<h2>USER</h2>
+
+<h2>ORDER</h2>
+
+<h2>CATALOG</h2>
+
+<button id="btnUserPage">USER 페이지 호출</button>
+
+<p th:text="test"></p>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#btnUserPage").click(function() {
+        $.ajax({
+            url: "/user/page",
+            async: true,
+            type: "POST",
+            dataType: "html",
+            cache: false,
+            success: function (data) {
+        //        alert(data);
+            }
+        });
+    });
+});
+
+</script>
+</html>

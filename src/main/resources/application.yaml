@@ -1,3 +1,66 @@
 
+
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  application:
+    name: 2022pmds-frontend
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    enabled: true
+    mode: LEGACYHTML5
+    encoding: UTF-8
+
 server:
   port: 9998
+
+#########################################################
+#### Actuator
+#########################################################
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: never
+    shutdown:
+      enabled: true
+    caches:
+      enabled: false
+
+info:
+  organization:
+    name: thj0309
+  contact:
+    email: thj0309@hotmail.com
+
+---
+
+spring:
+  profiles: local
+
+page:
+  user-url: http://localhost:9999/user
+  order-url: http://localhost:9997/order
+  catalog-url: http://localhost:9996/catalog
+
+# -- Eureka client
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+---
+
+spring:
+  profiles: prod
+

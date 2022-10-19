@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+<h1>Spring Feign 적용</h1>
+<h2>현재 가입한 사용자 목록</h2>
+
+<table style="border:1px;">
+    <thead>
+        <tr>
+            <th>이름</th>
+            <th>사용자ID(시스템)</th>
+            <th>email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="each : ${result}">
+            <td th:text="${each.name}"></td>
+            <td th:text="${each.userId}"></td>
+            <td th:text="${each.email}"></td>
+        </tr>
+    </tbody>
+</table>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#btnGet").click(function() {
+        $.ajax({
+            url: "/user/test",
+            type: "get",
+            success: function (data) {
+                alert(data);
+            }
+        });
+    });
+});
+
+</script>
+
+</html>
