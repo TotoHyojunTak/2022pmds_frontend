@@ -44,23 +44,31 @@ info:
 spring:
   profiles: local
 
-page:
-  user-url: http://localhost:9999/user
-  order-url: http://localhost:9997/order
-  catalog-url: http://localhost:9996/catalog
 
-# -- Eureka client
+#########################################################
+#### Eureka client
+#########################################################
 eureka:
   instance:
     instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
   client:
     register-with-eureka: true
     fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
 ---
 
 spring:
-  profiles: prod
+  profiles: dev
 
+#########################################################
+#### Eureka client
+#########################################################
+eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}}
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: ${EUREKA_URL:http://146.56.114.57:8761/eureka/}
