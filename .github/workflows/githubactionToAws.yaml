@@ -86,9 +86,8 @@ jobs:
 #         cache-from: type=local,src=/tmp/.buildx-cache
 #         cache-to: type=local,dest=/tmp/.buildx-cache-new
       run: 
-        echo pwd
+        pwd
         docker build -t thj0309/2022pmds_frontend:1.0 .
-        echo pwd
         docker push thj0309/2022pmds_frontend:1.0
 #        docker build . -t ${{ secrets.DOCKER_FULL_REPO }} 
 #        docker push ${{ secrets.DOCKER_FULL_REPO }}         
