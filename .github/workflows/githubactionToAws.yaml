@@ -97,7 +97,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: thj0309/2022pmds_frontend:1.0
+        tags: ${{ secrets.DOCKER_FULL_REPO }}
         cache-from: type=gha # 여기서 gha 는 Guthub Actions 용 캐시를 의미합니다.
         cache-to: type=gha,mode=max
         
