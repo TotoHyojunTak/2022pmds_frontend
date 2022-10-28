@@ -6,21 +6,110 @@
 </head>
 <body>
 
-catalog 화면
-<button id="btnGet">TEST</button>
+<h1>CATALOG SERVICE</h1>
+<br />
+<h2>1. 상품 등록</h2>
+Produce ID : <input type="text" id="productId"/><br/>
+Produce 명 : <input type="text" id="productName"/><br/>
+STOCK (재고) : <input type="text" id="stock"/><br/>
+UNIT PRICE (단가) : <input type="text" id="unitPrice"/><br/>
+<button id="btnSaveCatalog">등록</button>
+<br/><br/>
 
-<p th:text="test"></p>
+<h2>2. 현재 등록된 상품 정보 조회</h2>
+<button id="btnGetCatalogs">조회</button>
+<div id="panel2">
+
+</div>
+
+
+
+
+
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-    $("#btnGet").click(function() {
+    $("#btnSaveCatalog").click(function() {
         $.ajax({
-            url: "/catalog/test",
-            type: "get",
+            url: "/catalog/catalogs",
+            type: "post",
+            headers : {
+                  "Content-type" : "application/json",
+                  "X-HTTP-Method-Override" : "POST"
+            },
+            dataType:"json",
+            data : JSON.stringify({ // 보낼 데이터 (Object , String, Array)
+                                      "productId" : document.getElementById("productId").value,
+                                      "productName" : document.getElementById("productName").value,
+                                      "stock" : document.getElementById("stock").value,
+                                      "unitPrice" : document.getElementById("unitPrice").value
+                                    }),
             success: function (data) {
-                alert(data);
+                $("#panel2").empty();
+
+                console.log(result);
+                console.log(result.length);
+                let size = result.length;
+                let str = "<table border='1'>";
+                str += "<tr>";
+                str += "<th>상품ID</th>";
+                str += "<th>상품명</th>";
+                str += "<th>재고</th>";
+                str += "<th>단가</th>";
+                str += "</tr>"
+
+                for (i = 0; i < size; i++) {
+                    str += "<tr border='1'>";
+                    str += "    <td>" + result[i].productId + "</td>";
+                    str += "    <td>" + result[i].productName + "</td>";
+                    str += "    <td>" + result[i].stock + "</td>";
+                    str += "    <td>" + result[i].unitPrice + "</td>";
+                    str += "</tr>";
+                    //for end
+                    $("#panel2").append(str);
+                    str = "";
+                }
+
+                str += "</table>";
+                $("#panel2").append(str);
+            }
+        });
+    });
+
+    $("#btnGetCatalogs").click(function() {
+        $.ajax({
+            url: "/catalog/catalogs",
+            type: "get",
+            success: function (result) {
+                $("#panel2").empty();
+
+                    console.log(result);
+                    console.log(result.length);
+                    let size = result.length;
+                    let str = "<table border='1'>";
+                    str += "<tr>";
+                    str += "<th>상품ID</th>";
+                    str += "<th>상품명</th>";
+                    str += "<th>재고</th>";
+                    str += "<th>단가</th>";
+                    str += "</tr>"
+
+                    for (i = 0; i < size; i++) {
+                        str += "<tr border='1'>";
+                        str += "    <td>" + result[i].productId + "</td>";
+                        str += "    <td>" + result[i].productName + "</td>";
+                        str += "    <td>" + result[i].stock + "</td>";
+                        str += "    <td>" + result[i].unitPrice + "</td>";
+                        str += "</tr>";
+                        //for end
+                        $("#panel2").append(str);
+                        str = "";
+                    }
+
+                    str += "</table>";
+                    $("#panel2").append(str);
             }
         });
     });

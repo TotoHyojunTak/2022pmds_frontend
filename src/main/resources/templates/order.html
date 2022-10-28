@@ -29,6 +29,8 @@
                     alert("ERROR!" + error);
                 } // error end
                 , success: function (result) {
+                    $("#panel").empty();
+
                     console.log(result);
                     console.log(result.length);
                     let size = result.length;
@@ -40,10 +42,8 @@
                     str += "<th>단가</th>";
                     str += "<th>전체금액</th>";
                     str += "</tr>"
-                    $("#panel").append(str);
 
                     for (i = 0; i < size; i++) {
-                        str = "";
                         str += "<tr border='1'>";
                         str += "    <td>" + result[i].orderId + "</td>";
                         str += "    <td>" + result[i].produceId + "</td>";
@@ -56,6 +56,7 @@
                         //$("#panel").html(str);
                         // $("#panel").text(str);
                         $("#panel").append(str);
+                        str = "";
                     }
 
                     str += "</table>";
