@@ -5,11 +5,32 @@
     <title>order</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
+<script type="text/css">
+       body {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        caption {
+            caption-side: top;
+        }
+
+        .table {
+            border: 1px solid black;
+            border-collapse: collapse;
+            border-spacing: 20px 10px;
+        }
+
+        .table td {
+            border: 1px dotted black;
+            padding: 10px;
+            text-align: center;
+        }
+</script>
 <body>
 
 <h1>ORDER SERVICE</h1>
 <br />
-<h2>사용자별 주문 리스트</h2>
+<h2>1. 사용자별 주문 리스트</h2>
 사용자ID <input type="text" id="userId"/>
 <button id="btnGet">조회</button>
 
@@ -17,16 +38,43 @@
 
 </div>
 
+<br />
+<hr>
+<h2>2. 주문 등록</h2>
+사용자ID
+<select id="userId2" >
+    <option
+            th:each="user : ${userList}"
+            th:value="${user.userId}"
+            th:text="${user.name}"></option>
+</select><br/>
+상품ID
+<select id="productId" >
+    <option
+            th:each="catalog : ${catalogList}"
+            th:value="${catalog.productId}"
+            th:text="|${catalog.productName} : ${catalog.stock}개 |"></option>
+</select><br/>
+수량 <input type="text" id="stock"/><br/>
+단가 <input type="text" id="unitPrice"/><br/>
+<button id="btnPost">등록</button>
+
+<div id="panel2">
+
+</div>
+
 </body>
 <script type="text/javascript">
+
     $(document).ready(function(){
         $("#btnGet").click(function() {
             const userId = document.getElementById("userId").value;
             $.ajax({
                 url: "/order/list/" + userId
+                , type: "GET"
                 , dataType: "json"
                 , error: function (error) {
-                    alert("ERROR!" + error);
+                    alert("/order/list/ ERROR!" + error);
                 } // error end
                 , success: function (result) {
                     $("#panel").empty();
@@ -61,6 +109,40 @@
 
                     str += "</table>";
                     $("#panel").append(str);
+                    // success end
+                } // ajax() end
+            }); // click end
+        });
+
+        $("#btnPost").click(function() {
+            console.log(document.getElementById("userId2").value);
+            console.log(document.getElementById("productId").value);
+            console.log(document.getElementById("stock").value);
+            console.log(document.getElementById("unitPrice").value);
+
+            $.ajax({
+                url: "/order/orders/" + encodeURI(document.getElementById("userId2").value)
+                , type: "POST"
+                , contentType: 'application/json'
+                , data: JSON.stringify({ // 보낼 데이터 (Object , String, Array)
+                    "userId": document.getElementById("userId2").value,
+                    "productId": document.getElementById("productId").value,
+                    "stock": document.getElementById("stock").value,
+                    "unitPrice": document.getElementById("unitPrice").value
+                })
+                , dataType: "json"
+                , error: function (error) {
+                    console.log("/order/orders/ ERROR!" + error);
+                } // error end
+                , success: function (result) {
+                    $("#panel2").empty();
+
+                    document.getElementById("stock").value=0;
+                    document.getElementById("unitPrice").value=0;
+
+                    console.log(result);
+                    console.log(result.length);
+                    $("#panel2").append(result);
                     // success end
                 } // ajax() end
             }); // click end

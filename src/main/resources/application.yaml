@@ -42,8 +42,9 @@ info:
 ---
 
 spring:
-  profiles: local
-
+  config:
+    activate:
+      on-profile: local
 
 #########################################################
 #### Eureka client
@@ -56,10 +57,13 @@ eureka:
     fetch-registry: true
     serviceUrl:
       defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+
 ---
 
 spring:
-  profiles: dev
+  config:
+    activate:
+      on-profile: dev
 
 #########################################################
 #### Eureka client
@@ -72,3 +76,4 @@ eureka:
     fetch-registry: true
     serviceUrl:
       defaultZone: ${EUREKA_URL:http://146.56.114.57:8761/eureka/}
+
